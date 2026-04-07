@@ -1,28 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Search from './pages/Search';
-import Home from './pages/Home';
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
 import Details from "./pages/Details";
-
-const Login = () => <h1 className="text-white p-24">Iniciar Sesión</h1>;
+import Login from "./pages/Login";
+import Search from "./pages/Search";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
-    <Router>
+    <div className="flex flex-col min-h-screen bg-[#040714] text-white">
       <Navbar />
-      {/* El div envuelve las rutas para dar el fondo oscuro global */}
-      <div className="min-h-screen bg-[#040714] text-white">
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/movie/:id" element={<Details />} />
-          
-          {/* Ruta para manejar errores 404 */}
-          <Route path="*" element={<h2 className="p-24">404 - Página no encontrada</h2>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
-      </div>
-    </Router>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
