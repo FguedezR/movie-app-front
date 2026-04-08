@@ -16,33 +16,26 @@ const Details = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
 
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const BASE_URL = "https://api.themoviedb.org/3";
-  const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+  const PROXY = `${API_URL}/api/movies/proxy`;
+  const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
 
   // 1. CARGAR DATOS DE LA PELÍCULA
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let movieRes = await fetch(
-          `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=es-ES`,
-        );
+        let movieRes = await fetch(`${PROXY}/movie/${id}`);
         let data = await movieRes.json();
 
         if (data.success === false) {
-          movieRes = await fetch(
-            `${BASE_URL}/tv/${id}?api_key=${API_KEY}&language=es-ES`,
-          );
+          movieRes = await fetch(`${PROXY}/tv/${id}`);
           data = await movieRes.json();
         }
 
         setMovie(data);
 
         const type = data.first_air_date ? "tv" : "movie";
-        const recRes = await fetch(
-          `${BASE_URL}/${type}/${id}/recommendations?api_key=${API_KEY}&language=es-ES`,
-        );
+        const recRes = await fetch(`${PROXY}/${type}/${id}/recommendations`);
         const recData = await recRes.json();
         setRecommendations(recData.results || []);
 
