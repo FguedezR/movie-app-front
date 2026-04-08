@@ -40,14 +40,14 @@ const MovieRow = ({ title, fetchUrl }) => {
       <div className="group relative">
         <button
           onClick={() => slide("left")}
-          className="absolute left-0 top-0 bottom-[60px] z-40 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity px-2 rounded-r-lg"
+          className="hidden md:block absolute left-0 top-0 bottom-[60px] z-40 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity px-2 rounded-r-lg"
         >
           <ChevronLeft size={40} />
         </button>
 
         <div
           ref={rowRef}
-          className="flex gap-6 overflow-x-hidden scroll-smooth py-6" // Añadimos padding vertical aquí
+          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-6" // Añadimos padding vertical aquí
         >
           {movies.map((movie) => (
             <div
@@ -90,7 +90,7 @@ const MovieRow = ({ title, fetchUrl }) => {
 
         <button
           onClick={() => slide("right")}
-          className="absolute right-0 top-0 bottom-[60px] z-40 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity px-2 rounded-l-lg"
+          className="hidden md:block absolute right-0 top-0 bottom-[60px] z-40 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity px-2 rounded-l-lg"
         >
           <ChevronRight size={40} />
         </button>

@@ -10,3 +10,12 @@ main,
 .page-container {
   padding-top: 80px;
 }
+
+/* Ocultar barra de desplazamiento manteniendo funcionalidad */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
