@@ -23,25 +23,29 @@ const Details = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // CARGAR DATOS DE LA PELÍCULA (TMDB)
-        const movieRes = await fetch(
+        // 1. Intentamos obtener datos buscando en AMBOS endpoints (movie y tv)
+        // O mejor aún, usamos el endpoint 'append_to_response' o probamos uno tras otro
+        let movieRes = await fetch(
           `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=es-ES`,
         );
-        const movieData = await movieRes.json();
+        let movieData = await movieRes.json();
+
+        // 2. Si el primer intento da 404, es porque es una SERIE (tv)
+        if (movieData.success === false) {
+          movieRes = await fetch(
+            `${BASE_URL}/tv/${id}?api_key=${API_KEY}&language=es-ES`,
+          );
+          movieData = await movieRes.json();
+        }
+
         setMovie(movieData);
 
-        // CARGAR RESEÑAS (TU BACKEND)
-        // Cambiamos ${movieId} por ${id} que es como lo recibe useParams
+        // 3. Cargar reseñas de tu backend (esto se mantiene igual)
         const res = await fetch(
           `http://localhost:5001/api/reviews/movie/${id}`,
         );
         const data = await res.json();
-
-        if (res.ok && Array.isArray(data)) {
-          setReviews(data);
-        } else {
-          setReviews([]);
-        }
+        setReviews(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error cargando datos:", err);
         setReviews([]);
@@ -107,7 +111,7 @@ const Details = () => {
       <div className="relative z-10 pt-32 px-8 md:px-16 lg:px-24">
         {/* Cabecera */}
         <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-          {movie.title}
+          {movie.title || movie.name}
         </h1>
 
         <div className="flex items-center gap-4 mb-8">
@@ -122,9 +126,13 @@ const Details = () => {
         {/* Info Película */}
         <div className="max-w-2xl mb-12">
           <p className="text-sm font-bold text-gray-400 mb-4 flex gap-2">
-            <span>{movie.release_date?.split("-")[0]}</span>
+            <span>
+              {(movie.release_date || movie.first_air_date)?.split("-")[0]}
+            </span>
             <span>•</span>
-            <span>{movie.runtime} min</span>
+            <span>
+              {movie.runtime || movie.episode_run_time?.[0] || "--"} min
+            </span>
             <span>•</span>
             <span className="text-white">
               {movie.genres?.map((g) => g.name).join(", ")}
