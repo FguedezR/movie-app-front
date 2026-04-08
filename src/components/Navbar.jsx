@@ -50,9 +50,6 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center space-x-8">
           <NavItem label="INICIO" to="/" Icon={Home} />
           {user && <NavItem label="MI LISTA" to="/watchlist" Icon={Plus} />}
-          <NavItem label="ORIGINALES" to="/originals" Icon={Star} />
-          <NavItem label="PELÍCULAS" to="/movies" Icon={Film} />
-          <NavItem label="SERIES" to="/series" Icon={Tv} />
         </div>
       </div>
 
