@@ -10,8 +10,15 @@ export const getPopularMovies = async () => {
 };
 
 export const searchMovies = async (query) => {
-  const response = await api.get(`/movies/search?query=${query}`);
-  return response.data;
+  try {
+    const response = await api.get(`/movies/search`, {
+      params: { query: query }, // axios se encarga de ponerlo como ?query=batman
+    });
+    return response.data; // array de resultados
+  } catch (error) {
+    console.error("Error en searchMovies:", error);
+    return [];
+  }
 };
 
 // página detalles

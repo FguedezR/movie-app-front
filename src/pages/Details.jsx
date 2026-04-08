@@ -220,14 +220,14 @@ const Details = () => {
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white animate-in" />
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white animate-in" />
               )}
             </button>
           ))}
         </div>
 
         {/* Contenido Pestañas */}
-        <div className="py-10 min-h-[400px]">
+        <div className="py-10 min-h-100">
           {activeTab === "sugerencias" ? (
             <div className="animate-fadeIn grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {recommendations.length > 0 ? (
