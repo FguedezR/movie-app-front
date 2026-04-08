@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -31,6 +32,17 @@ const Login = () => {
         className="bg-gray-900 p-10 rounded-lg w-96 flex flex-col gap-4 border border-gray-800"
       >
         <h2 className="text-2xl font-bold text-white mb-4">Iniciar Sesión</h2>
+        <div className="mt-8 text-center">
+          <p className="text-gray-400 text-sm">
+            ¿Eres nuevo en Movie+?{" "}
+            <Link
+              to="/register"
+              className="text-white hover:underline font-bold"
+            >
+              Suscríbete ahora
+            </Link>
+          </p>
+        </div>
         <input
           type="email"
           placeholder="Email"

@@ -92,7 +92,7 @@ const Navbar = () => {
               />
             </Link>
             {/* Dropdown al hacer Hover */}
-            <div className="absolute top-10 right-0 mt-2 w-40 bg-[#131313] border border-gray-800 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto shadow-2xl">
+            <div className="absolute top-full right-0 pt-2 w-40 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
               <div className="p-4 border-b border-gray-800 lg:hidden">
                 <p className="text-[10px] text-gray-500 font-bold uppercase">
                   Menú rápido

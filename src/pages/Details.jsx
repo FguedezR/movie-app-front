@@ -51,7 +51,7 @@ const Details = () => {
       return alert("Completa todos los campos");
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("disney_token");
       const res = await fetch("http://localhost:5001/api/reviews", {
         method: "POST",
         headers: {
@@ -143,14 +143,14 @@ const Details = () => {
             >
               {tab}
               {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white animate-in" />
+                <div className="absolute bottom-0 left-0 w-full h[2px] bg-white animate-in" />
               )}
             </button>
           ))}
         </div>
 
         {/* Contenido Pestañas */}
-        <div className="py-10 min-h-[200px]">
+        <div className="py-10 min-h-50">
           {activeTab === "detalles" ? (
             <div className="animate-fadeIn max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>

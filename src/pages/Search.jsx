@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import { searchMovies } from "../api/movieApi";
-import MovieCard from "../components/MovieCard"; // 1. IMPORTAR AQUÍ
+import MovieCard from "../components/MovieCard";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +30,7 @@ const Search = () => {
       )}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {results.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} /> // 2. USAR AQUÍ
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </div>

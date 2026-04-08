@@ -30,14 +30,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    // CORRECCIÓN: Borramos exactamente las mismas llaves que creamos
     localStorage.removeItem("disney_token");
     localStorage.removeItem("disney_user");
 
     setUser(null);
 
-    // No es estrictamente necesario el window.location.href si usas setUser(null),
-    // pero ayuda a limpiar cualquier estado residual de la app.
     window.location.href = "/";
   };
 
