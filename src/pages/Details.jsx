@@ -19,31 +19,37 @@ const Details = () => {
   const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
 
   // Cargar Película y Reseñas
+  // 1. Asegúrate de tener el useEffect así:
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Cargar Película
+        // CARGAR DATOS DE LA PELÍCULA (TMDB)
         const movieRes = await fetch(
           `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=es-ES`,
         );
         const movieData = await movieRes.json();
         setMovie(movieData);
 
-        // Cargar Reseñas Aprobadas
-        const reviewRes = await fetch(
-          `http://localhost:5001/api/reviews/${id}`,
+        // CARGAR RESEÑAS (TU BACKEND)
+        // Cambiamos ${movieId} por ${id} que es como lo recibe useParams
+        const res = await fetch(
+          `http://localhost:5001/api/reviews/movie/${id}`,
         );
-        const reviewData = await reviewRes.json();
-        setReviews(reviewData);
+        const data = await res.json();
 
-        window.scrollTo(0, 0);
+        if (res.ok && Array.isArray(data)) {
+          setReviews(data);
+        } else {
+          setReviews([]);
+        }
       } catch (err) {
-        console.error("Error al cargar datos:", err);
+        console.error("Error cargando datos:", err);
+        setReviews([]);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id]); // Se ejecuta cada vez que el ID de la URL cambie
 
   const handleSubmitReview = async () => {
     if (!user) return alert("Debes iniciar sesión");
@@ -242,7 +248,7 @@ const Details = () => {
                 {reviews.length}
               </span>
             </h3>
-            <div className="max-h-[500px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
+            <div className="max-h-125 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
               {reviews.length === 0 ? (
                 <div className="flex flex-col items-center gap-2 py-10 border border-dashed border-gray-800 rounded-xl">
                   <Info size={30} className="text-gray-700" />

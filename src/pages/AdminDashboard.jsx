@@ -14,15 +14,28 @@ const AdminDashboard = () => {
 
   const fetchPending = async () => {
     try {
-      const token = localStorage.getItem("disney_token");
+      const token = localStorage.getItem("disney_token"); // Asegúrate que sea este nombre
+
       const res = await fetch("http://localhost:5001/api/reviews/pending", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`, // Verifica que el espacio esté ahí
+          "Content-Type": "application/json",
+        },
       });
+
       const data = await res.json();
-      console.log("Datos recibidos del servidor:", data);
-      setPending(data);
+      console.log("Datos recibidos:", data);
+
+      // SEGURIDAD: Solo hacemos setPending si la data es un Array
+      if (Array.isArray(data)) {
+        setPending(data);
+      } else {
+        console.error("La respuesta no es un array:", data);
+        setPending([]); // Evita que .map() falle
+      }
     } catch (err) {
-      console.error("Error al cargar pendientes:", err);
+      console.error("Error al cargar:", err);
+      setPending([]);
     } finally {
       setLoading(false);
     }
@@ -36,24 +49,29 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("disney_token");
 
-      // 'approve' usa PUT a nuestra ruta de aprobación
-      // 'reject' usa DELETE para borrarla de la base de datos
+      // IMPORTANTE: Verifica que la ruta coincida con el backend
+      // Si en backend es /api/reviews/approve/:id
       const url =
         action === "approve"
-          ? `http://localhost:5001/api/reviews/approve/${id}`
+          ? `http://localhost:5001/api/reviews/approve/${id}` // <--- La barra antes del ${id} es clave
           : `http://localhost:5001/api/reviews/${id}`;
 
       const res = await fetch(url, {
         method: action === "approve" ? "PUT" : "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       if (res.ok) {
-        // Filtramos localmente para que la UI responda instantáneo
-        setPending(pending.filter((rev) => rev._id !== id));
+        // Quitamos de la lista local para que desaparezca de la vista
+        setPending((prev) => prev.filter((rev) => rev._id !== id));
+      } else {
+        console.error("Error en la petición:", res.status);
       }
     } catch (err) {
-      alert("Error al procesar la acción");
+      console.error("Error al procesar acción:", err);
     }
   };
 
@@ -109,8 +127,8 @@ const AdminDashboard = () => {
 
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500 text-sm">Escrito por:</span>
-                  <span className="text-blue-400 text-sm font-bold underline decoration-blue-800 underline-offset-4">
-                    {rev.userId?.username || "Usuario anónimo"}
+                  <span className="text-blue-400 font-bold">
+                    {rev.userId?.username || "Usuario Anónimo"}
                   </span>
                   <div className="flex text-yellow-500 text-xs ml-4">
                     {"★".repeat(rev.rating)}
