@@ -13,7 +13,8 @@ const Watchlist = () => {
     if (!user) return;
     try {
       const token = localStorage.getItem("disney_token");
-      const res = await fetch("http://localhost:5001/api/watchlist", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+      const res = await fetch(`${API_URL}/api/watchlist`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -33,7 +34,8 @@ const Watchlist = () => {
     e.stopPropagation(); // Evita que al hacer clic en borrar nos lleve a detalles
     try {
       const token = localStorage.getItem("disney_token");
-      await fetch("http://localhost:5001/api/watchlist/toggle", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+      await fetch(`${API_URL}/api/watchlist/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

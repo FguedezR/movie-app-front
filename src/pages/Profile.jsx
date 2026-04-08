@@ -19,7 +19,7 @@ const Profile = () => {
     const fetchMyReviews = async () => {
       try {
         const token = localStorage.getItem("disney_token");
-        const res = await fetch("http://localhost:5001/api/reviews/me", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

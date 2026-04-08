@@ -16,9 +16,10 @@ const Details = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
 
-  const API_KEY = "592645d02224a086ee675ff498e545ca";
+  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
   const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
   // 1. CARGAR DATOS DE LA PELÍCULA
   useEffect(() => {
@@ -45,9 +46,7 @@ const Details = () => {
         const recData = await recRes.json();
         setRecommendations(recData.results || []);
 
-        const reviewsRes = await fetch(
-          `http://localhost:5001/api/reviews/movie/${id}`,
-        );
+        const reviewsRes = await fetch(`${API_URL}/api/reviews/movie/${id}`);
         const reviewsData = await reviewsRes.json();
         setReviews(Array.isArray(reviewsData) ? reviewsData : []);
       } catch (err) {
@@ -64,7 +63,7 @@ const Details = () => {
       if (!user) return;
       try {
         const token = localStorage.getItem("disney_token");
-        const res = await fetch("http://localhost:5001/api/watchlist", {
+        const res = await fetch(`${API_URL}/api/watchlist`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const list = await res.json();
@@ -86,7 +85,7 @@ const Details = () => {
 
     try {
       const token = localStorage.getItem("disney_token");
-      const res = await fetch("http://localhost:5001/api/watchlist/toggle", {
+      const res = await fetch(`${API_URL}/api/watchlist/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,7 +115,7 @@ const Details = () => {
 
     try {
       const token = localStorage.getItem("disney_token");
-      const res = await fetch("http://localhost:5001/api/reviews", {
+      const res = await fetch(`${API_URL}/api/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("disney_token"); // Asegúrate que sea este nombre
 
-      const res = await fetch("http://localhost:5001/api/reviews/pending", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/pending`, {
         headers: {
           Authorization: `Bearer ${token}`, // Verifica que el espacio esté ahí
           "Content-Type": "application/json",
@@ -53,8 +53,8 @@ const AdminDashboard = () => {
       // Si en backend es /api/reviews/approve/:id
       const url =
         action === "approve"
-          ? `http://localhost:5001/api/reviews/approve/${id}` // <--- La barra antes del ${id} es clave
-          : `http://localhost:5001/api/reviews/${id}`;
+          ? `${import.meta.env.VITE_API_URL}/api/reviews/approve/${id}` // <--- La barra antes del ${id} es clave
+          : `${import.meta.env.VITE_API_URL}/api/reviews/${id}`;
 
       const res = await fetch(url, {
         method: action === "approve" ? "PUT" : "DELETE",
