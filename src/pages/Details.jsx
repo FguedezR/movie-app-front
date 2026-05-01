@@ -14,6 +14,7 @@ const Details = () => {
   const [activeTab, setActiveTab] = useState("sugerencias");
   const [reviews, setReviews] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [cast, setCast] = useState([]);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
@@ -37,6 +38,10 @@ const Details = () => {
         const recRes = await fetch(`${PROXY}/${type}/${id}/recommendations`);
         const recData = await recRes.json();
         setRecommendations(recData.results || []);
+
+        const credRes = await fetch(`${PROXY}/${type}/${id}/credits`);
+        const credData = await credRes.json();
+        setCast(credData.cast || []);
 
         const reviewsRes = await fetch(`${API_URL}/api/reviews/movie/${id}`);
         const reviewsData = await reviewsRes.json();
@@ -194,12 +199,12 @@ const Details = () => {
           </p>
         </div>
 
-        <div className="mt-16 border-b border-gray-800 flex gap-8 mb-8">
-          {["sugerencias", "detalles"].map((tab) => (
+        <div className="mt-16 border-b border-gray-800 flex gap-8 mb-8 overflow-x-auto">
+          {["sugerencias", "reparto", "detalles"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-4 text-sm font-bold tracking-[2px] uppercase relative transition-all ${
+              className={`pb-4 text-sm font-bold tracking-[2px] uppercase relative transition-all whitespace-nowrap ${
                 activeTab === tab
                   ? "text-white"
                   : "text-gray-500 hover:text-white"
@@ -213,8 +218,8 @@ const Details = () => {
           ))}
         </div>
 
-        <div className="py-10 min-h-100">
-          {activeTab === "sugerencias" ? (
+        <div className="py-10 min-h-[300px]">
+          {activeTab === "sugerencias" && (
             <div className="animate-fadeIn grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {recommendations.length > 0 ? (
                 recommendations.slice(0, 8).map((rec) => (
@@ -247,7 +252,37 @@ const Details = () => {
                 </p>
               )}
             </div>
-          ) : (
+          )}
+
+          {activeTab === "reparto" && (
+            <div className="animate-fadeIn grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              {cast.length > 0 ? (
+                cast.slice(0, 10).map((actor) => (
+                  <div key={actor.id} className="group flex flex-col items-center text-center">
+                    <div className="relative w-28 h-28 md:w-32 md:h-32 mb-4 overflow-hidden rounded-full border-2 border-gray-800 group-hover:border-white transition-colors duration-300 shadow-lg">
+                      <img
+                        src={
+                          actor.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                            : `https://api.dicebear.com/7.x/avataaars/svg?seed=${actor.name}`
+                        }
+                        alt={actor.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <h4 className="text-sm font-bold text-gray-200 line-clamp-1">{actor.name}</h4>
+                    <p className="text-xs text-gray-500 line-clamp-1">{actor.character}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500 italic col-span-full">
+                  No hay información del reparto disponible.
+                </p>
+              )}
+            </div>
+          )}
+
+          {activeTab === "detalles" && (
             <div className="animate-fadeIn max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xs font-bold text-gray-500 uppercase tracking-[2px] mb-2">
