@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // 1. IMPORTACIÓN NECESARIA
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Banner from "../components/Banner";
@@ -10,7 +10,6 @@ const Home = () => {
   const navigate = useNavigate();
   const [myList, setMyList] = useState([]);
 
-  // cargar mi lista desde el backend
   useEffect(() => {
     const fetchMyList = async () => {
       if (!user) return;
@@ -32,11 +31,11 @@ const Home = () => {
 
   return (
     <div className="bg-[#040714] min-h-screen text-white pb-20">
-      {/* 1. Banner Principal */}
+
       <Banner fetchUrl={requests.fetchTrending} />
 
       <div className="flex flex-col gap-4 -mt-20 relative z-20">
-        {/* --- SECCIÓN: MI LISTA (Solo aparece si hay películas) --- */}
+
         {myList.length > 0 && (
           <div className="mb-8 px-8 md:px-16 lg:px-24">
             <h2 className="text-xl md:text-2xl font-bold mb-4 tracking-wide">
@@ -63,7 +62,6 @@ const Home = () => {
           </div>
         )}
 
-        {/* 3. Filas de Contenido Originales */}
         <MovieRow
           title="Novedades en Disney+"
           fetchUrl={requests.fetchDisneyPlus}

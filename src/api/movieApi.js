@@ -12,16 +12,15 @@ export const getPopularMovies = async () => {
 export const searchMovies = async (query) => {
   try {
     const response = await api.get(`/movies/search`, {
-      params: { query: query }, // axios se encarga de ponerlo como ?query=batman
+      params: { query: query },
     });
-    return response.data; // array de resultados
+    return response.data;
   } catch (error) {
     console.error("Error en searchMovies:", error);
     return [];
   }
 };
 
-// página detalles
 export const getMovieById = async (id) => {
   const response = await api.get(`/movies/${id}`);
   return response.data;

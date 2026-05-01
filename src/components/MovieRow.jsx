@@ -18,7 +18,6 @@ const MovieRow = ({ title, fetchUrl }) => {
     fetchMovies();
   }, [fetchUrl]);
 
-  // Lógica para mover el scroll horizontalmente
   const slide = (direction) => {
     if (rowRef.current) {
       const { scrollLeft, clientWidth } = rowRef.current;
@@ -47,7 +46,7 @@ const MovieRow = ({ title, fetchUrl }) => {
 
         <div
           ref={rowRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-6" // Añadimos padding vertical aquí
+          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth py-6"
         >
           {movies.map((movie) => (
             <div
@@ -55,7 +54,7 @@ const MovieRow = ({ title, fetchUrl }) => {
               onClick={() => navigate(`/movie/${movie.id}`)}
               className="min-w-[200px] md:min-w-[280px] cursor-pointer group/card"
             >
-              {/* Contenedor de Imagen con Efecto Disney */}
+
               <div className="relative overflow-hidden rounded-lg border-2 border-transparent group-hover/card:border-gray-300 group-hover/card:scale-105 transition-all duration-300 shadow-2xl">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}`}
@@ -65,7 +64,6 @@ const MovieRow = ({ title, fetchUrl }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity" />
               </div>
 
-              {/* INFO FUERA DE LA IMAGEN */}
               <div className="mt-4 px-1">
                 <h3 className="text-sm font-bold truncate group-hover/card:text-blue-400 transition-colors">
                   {movie.title || movie.name}

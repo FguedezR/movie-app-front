@@ -11,7 +11,7 @@ const Navbar = () => {
   const [term, setTerm] = useState("");
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // Nuevo para móvil
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -26,12 +26,12 @@ const Navbar = () => {
   const handleInputChange = (e) => {
   const value = e.target.value;
   setTerm(value);
-  
+
   if (value.trim().length > 0) {
-    // Navegamos a la página de búsqueda
+
     navigate(`/search?q=${encodeURIComponent(value)}`, { replace: true });
   } else {
-    // Si borramos todo, volvemos al inicio
+
     if (location.pathname === "/search") {
       navigate(`/`, { replace: true });
     }
@@ -40,13 +40,13 @@ const Navbar = () => {
 
   return (
     <>
-      {/* --- NAVBAR SUPERIOR --- */}
+
       <nav
         className={`fixed top-0 z-[100] w-full px-6 md:px-12 h-20 bg-[#040714]/95 backdrop-blur-md transition-transform duration-500 flex items-center justify-between ${
           show ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        {/* IZQUIERDA: LOGO */}
+
         <div className="flex items-center gap-10">
           <Link to="/" className="flex items-center group">
             <span className="text-2xl md:text-3xl font-black tracking-tighter italic">
@@ -58,16 +58,14 @@ const Navbar = () => {
             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full ml-0.5 mt-2 animate-pulse"></span>
           </Link>
 
-          {/* Menú Desktop */}
           <div className="hidden lg:flex items-center space-x-8">
             <NavItem label="INICIO" to="/" Icon={Home} />
             {user && <NavItem label="MI LISTA" to="/watchlist" Icon={Plus} />}
           </div>
         </div>
 
-        {/* DERECHA: BÚSQUEDA + USUARIO */}
         <div className="flex items-center gap-4 md:gap-6">
-          {/* Buscador Desktop */}
+
           <div className="hidden md:flex items-center border-b border-gray-600 focus-within:border-white transition-all pb-1 group">
             <input
               type="text"
@@ -82,7 +80,6 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Lupa para abrir buscador en Móvil */}
           <button
             onClick={() => setIsSearchOpen(true)}
             className="md:hidden p-2 text-gray-400 hover:text-white"
@@ -90,7 +87,6 @@ const Navbar = () => {
             <Search size={24} />
           </button>
 
-          {/* Perfil / Login */}
           {user ? (
             <div className="group relative flex items-center gap-3 cursor-pointer">
               <Link to="/profile" className="flex items-center gap-2">
@@ -128,7 +124,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* --- BUSCADOR OVERLAY (MÓVIL) --- */}
       {isSearchOpen && (
         <div className="fixed inset-0 z-[200] bg-[#040714] p-6 flex flex-col animate-fadeIn">
           <div className="flex items-center justify-between mb-8">
@@ -162,7 +157,6 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* --- BARRA NAVEGACIÓN INFERIOR (MÓVIL) --- */}
       <div className="lg:hidden fixed bottom-0 left-0 w-full h-16 bg-[#040714] border-t border-gray-800 z-[100] flex items-center justify-around px-2">
         <MobileLink
           to="/"
@@ -198,7 +192,6 @@ const Navbar = () => {
   );
 };
 
-// Componente para los links móviles
 const MobileLink = ({ to, Icon, label, active }) => (
   <Link
     to={to}

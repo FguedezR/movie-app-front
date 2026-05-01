@@ -14,11 +14,11 @@ const AdminDashboard = () => {
 
   const fetchPending = async () => {
     try {
-      const token = localStorage.getItem("disney_token"); // Asegúrate que sea este nombre
+      const token = localStorage.getItem("disney_token");
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/reviews/pending`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Verifica que el espacio esté ahí
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -26,12 +26,11 @@ const AdminDashboard = () => {
       const data = await res.json();
       console.log("Datos recibidos:", data);
 
-      // SEGURIDAD: Solo hacemos setPending si la data es un Array
       if (Array.isArray(data)) {
         setPending(data);
       } else {
         console.error("La respuesta no es un array:", data);
-        setPending([]); // Evita que .map() falle
+        setPending([]);
       }
     } catch (err) {
       console.error("Error al cargar:", err);
@@ -49,11 +48,9 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("disney_token");
 
-      // IMPORTANTE: Verifica que la ruta coincida con el backend
-      // Si en backend es /api/reviews/approve/:id
       const url =
         action === "approve"
-          ? `${import.meta.env.VITE_API_URL}/api/reviews/approve/${id}` // <--- La barra antes del ${id} es clave
+          ? `${import.meta.env.VITE_API_URL}/api/reviews/approve/${id}`
           : `${import.meta.env.VITE_API_URL}/api/reviews/${id}`;
 
       const res = await fetch(url, {
@@ -65,7 +62,7 @@ const AdminDashboard = () => {
       });
 
       if (res.ok) {
-        // Quitamos de la lista local para que desaparezca de la vista
+
         setPending((prev) => prev.filter((rev) => rev._id !== id));
       } else {
         console.error("Error en la petición:", res.status);

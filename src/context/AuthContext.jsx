@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Usamos los nombres correctos: "disney_user" y "disney_token"
+
     const savedUser = localStorage.getItem("disney_user");
     const token = localStorage.getItem("disney_token");
 
@@ -16,14 +16,14 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(savedUser));
       } catch (e) {
         console.error("Error al parsear el usuario", e);
-        logout(); // Si el JSON está corrupto, limpiamos todo
+        logout();
       }
     }
     setLoading(false);
   }, []);
 
   const login = (userData, token) => {
-    // Guardamos con el prefijo "disney_"
+
     localStorage.setItem("disney_token", token);
     localStorage.setItem("disney_user", JSON.stringify(userData));
     setUser(userData);

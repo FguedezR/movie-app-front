@@ -1,21 +1,19 @@
-/* src/index.css */
+
 @import "tailwindcss";
 
 :root {
   background-color: #040714;
 }
 
-/* Evita que el contenido se oculte tras la navbar de 80px (h-20) */
 main,
 .page-container {
   padding-top: 80px;
 }
 
-/* Ocultar barra de desplazamiento manteniendo funcionalidad */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

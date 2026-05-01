@@ -19,17 +19,16 @@ const Banner = ({ fetchUrl }) => {
   if (!movie) return <div className="h-[70vh] bg-[#040714]" />;
 
   return (
-    <header 
+    <header
       onClick={() => navigate(`/movie/${movie.id}`)}
       className="relative h-[80vh] cursor-pointer group overflow-hidden transition-all duration-500"
     >
-      {/* Imagen con zoom suave al hacer hover en el header */}
-      <div 
+
+      <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
         style={{ backgroundImage: `url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}")` }}
       />
-      
-      {/* Degradados para legibilidad */}
+
       <div className="absolute inset-0 bg-gradient-to-r from-[#040714] via-transparent to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#040714] via-transparent to-transparent" />
 
@@ -40,7 +39,7 @@ const Banner = ({ fetchUrl }) => {
         <p className="text-lg text-gray-200 mb-8 line-clamp-3 drop-shadow-md italic">
           {movie?.overview}
         </p>
-        
+
         <div className="flex gap-4">
           <button className="flex items-center gap-2 bg-white text-black px-8 py-3 rounded font-bold hover:bg-opacity-80 transition">
             <Play fill="black" /> Ver Ahora

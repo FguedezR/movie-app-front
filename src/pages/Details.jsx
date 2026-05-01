@@ -20,7 +20,6 @@ const Details = () => {
   const PROXY = `${API_URL}/api/movies/proxy`;
   const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
 
-  // 1. CARGAR DATOS DE LA PELÍCULA
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,7 +49,6 @@ const Details = () => {
     if (id) fetchData();
   }, [id]);
 
-  // 2. COMPROBAR SI ESTÁ EN LA WATCHLIST (Hook independiente en nivel superior)
   useEffect(() => {
     const checkWatchlist = async () => {
       if (!user) return;
@@ -69,7 +67,6 @@ const Details = () => {
     checkWatchlist();
   }, [id, user]);
 
-  // 3. FUNCIÓN PARA AÑADIR/QUITAR (Definida fuera de los useEffect)
   const handleWatchlist = async () => {
     if (!user) {
       alert("¡Oye! Inicia sesión para guardar tus favoritos.");
@@ -141,7 +138,7 @@ const Details = () => {
 
   return (
     <div className="relative min-h-screen bg-[#040714] text-white overflow-x-hidden">
-      {/* Fondo de pantalla */}
+
       <div className="fixed top-0 left-0 w-full h-[90vh] z-0 opacity-30">
         <img
           src={`${IMAGE_BASE}${movie.backdrop_path}`}
@@ -178,7 +175,6 @@ const Details = () => {
           </button>
         </div>
 
-        {/* Info Película */}
         <div className="max-w-2xl mb-12">
           <p className="text-sm font-bold text-gray-400 mb-4 flex gap-2">
             <span>
@@ -198,7 +194,6 @@ const Details = () => {
           </p>
         </div>
 
-        {/* Pestañas */}
         <div className="mt-16 border-b border-gray-800 flex gap-8 mb-8">
           {["sugerencias", "detalles"].map((tab) => (
             <button
@@ -218,7 +213,6 @@ const Details = () => {
           ))}
         </div>
 
-        {/* Contenido Pestañas */}
         <div className="py-10 min-h-100">
           {activeTab === "sugerencias" ? (
             <div className="animate-fadeIn grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -283,9 +277,8 @@ const Details = () => {
           )}
         </div>
 
-        {/* Reseñas */}
         <div className="mt-10 max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32">
-          {/* Formulario */}
+
           <div className="bg-[#131313]/80 p-8 rounded-xl border border-gray-800 self-start">
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
               <Star className="text-yellow-500" size={20} /> Deja tu opinión
@@ -325,7 +318,6 @@ const Details = () => {
             )}
           </div>
 
-          {/* Lista */}
           <div className="space-y-6">
             <h3 className="text-xl font-bold">
               Comentarios ({reviews.length})

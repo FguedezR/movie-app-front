@@ -31,7 +31,7 @@ const Watchlist = () => {
   }, [user]);
 
   const removeFromWatchlist = async (e, movieId) => {
-    e.stopPropagation(); // Evita que al hacer clic en borrar nos lleve a detalles
+    e.stopPropagation();
     try {
       const token = localStorage.getItem("disney_token");
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
@@ -43,7 +43,7 @@ const Watchlist = () => {
         },
         body: JSON.stringify({ movieId }),
       });
-      // Actualizamos el estado local para quitarla de la vista
+
       setMyList(myList.filter((item) => item.movieId !== movieId));
     } catch (err) {
       console.error("Error al borrar:", err);
@@ -59,7 +59,7 @@ const Watchlist = () => {
 
   return (
     <div className="min-h-screen bg-[#040714] text-white pt-32 px-8 md:px-16 lg:px-24">
-      {/* Encabezado */}
+
       <div className="flex items-center gap-4 mb-10">
         <button
           onClick={() => navigate("/")}
@@ -88,14 +88,14 @@ const Watchlist = () => {
               onClick={() => navigate(`/movie/${item.movieId}`)}
               className="group relative cursor-pointer"
             >
-              {/* Imagen con Efectos */}
+
               <div className="relative overflow-hidden rounded-lg border-2 border-transparent group-hover:border-gray-300 transition-all duration-300 shadow-2xl">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${item.posterPath}`}
                   alt={item.title}
                   className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                {/* Overlay al hacer Hover */}
+
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-4">
                   <Play fill="white" size={40} />
                   <button
@@ -106,7 +106,7 @@ const Watchlist = () => {
                   </button>
                 </div>
               </div>
-              {/* Título */}
+
               <h3 className="mt-3 text-sm font-semibold truncate text-gray-400 group-hover:text-white transition-colors">
                 {item.title}
               </h3>
